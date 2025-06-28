@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>免责声明</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FFD700',
+                        secondary: '#228B22',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .bg-gradient-custom {
+                background: linear-gradient(135deg, #FFD700 0%, #228B22 100%);
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .disclaimer-card {
+                backdrop-filter: blur(10px);
+                background-color: rgba(255, 255, 255, 0.85);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-custom font-sans">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-end">
+            <a href="https://cste.zone.id" class="bg-white/90 hover:bg-white text-secondary font-medium py-2 px-4 rounded-full shadow-md transition-all duration-300 transform hover:scale-105 flex items-center">
+                <i class="fa fa-home mr-2"></i>
+                <span>返回主页</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="container mx-auto px-4 pt-32 pb-20">
+        <div class="max-w-4xl mx-auto disclaimer-card rounded-2xl shadow-xl p-8 md:p-12">
+            <div class="text-center mb-10">
+                <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold text-gray-800 mb-4 text-shadow">免责声明</h1>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="space-y-6 text-gray-700 leading-relaxed">
+                <section>
+                    <h2 class="text-xl font-bold text-gray-800 mb-3">1. 免责声明的适用范围</h2>
+                    <p>本免责声明适用于访问本网址的所有用户。一旦您使用网站，即表示您已阅读、理解并同意接受本免责声明的所有条款和条件。如果您不同意本免责声明的任何部分，请立即停止离开网站。</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-gray-800 mb-3">2. 信息的准确性和完整性</h2>
+                    <p>本产品提供的所有信息（包括但不限于文字、图片、数据、图表等）仅供参考，不构成专业建议。用户应自行核实信息的真实性，并对因使用或依赖本产品信息而导致的任何损失承担全部责任。</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-gray-800 mb-3">3. 产品使用风险</h2>
+                    <p>本产品按"现状"提供，不附带任何形式的明示或暗示保证，包括但不限于适销性、特定用途适用性等保证。在法律允许的最大范围内，我们不对因使用或无法使用本产品而导致的任何直接、间接、偶然、特殊或惩罚性损害承担责任，即使我们已被告知此类损害的可能性。</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-gray-800 mb-3">4. 链接的第三方网站</h2>
+                    <p>本产品可能包含指向第三方网站的链接，这些链接仅为方便用户提供。我们不对第三方网站的内容、隐私政策或运营负责，也不认可其内容或服务。用户访问第三方网站时应自行承担风险，并遵守该网站的相关规定。</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-gray-800 mb-3">5. 知识产权</h2>
+                    <p>本产品的所有内容（包括但不限于文字、图片、音频、视频等）均受知识产权法律保护，未经许可不得复制、传播、修改或用于其他商业目的。</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-gray-800 mb-3">6. 法律适用和管辖</h2>
+                    <p>本免责声明的解释、效力和执行适用中国法律。如因本免责声明发生争议，双方应首先友好协商解决；协商不成的，任何一方均有权向有管辖权的人民法院提起诉讼。</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold text-gray-800 mb-3">7. 免责声明的变更</h2>
+                    <p>我们有权随时修改本免责声明的内容，修改后的免责声明一旦在本产品上公布即生效。用户应定期查看本免责声明，以了解最新条款。继续使用本产品即表示您同意接受修改后的免责声明。</p>
+                </section>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-gray-200">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm">© 2025 CST协会 保留所有权利.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-white/20 backdrop-blur-md py-6">
+        <div class="container mx-auto px-4 text-center text-gray-700 text-sm">
+            <p>最后更新日期: 2025年6月28日</p>
+        </div>
+    </footer>
+
+    <script>
+        // 滚动效果
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-white/90', 'shadow-md');
+            } else {
+                nav.classList.remove('bg-white/90', 'shadow-md');
+            }
+        });
+
+        // 返回顶部按钮
+        document.querySelector('a[href="#"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
+    
