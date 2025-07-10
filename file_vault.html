@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件保险柜</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffff00, #00ff00);
+            font-family: Arial, sans-serif;
+        }
+        .vault-container {
+            width: 350px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+        }
+        input[type="password"] {
+            width: 80%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        input[type="password"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #message {
+            margin-top: 20px;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="vault-container">
+        <h1>🔒 文件保险柜</h1>
+        <input type="password" id="passwordInput" placeholder="请输入密码">
+        <button onclick="checkPassword()">下载文件</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        const passwordMap = {
+            'test: 'https://ghproxy.net/https://github.com/Commandstone/CSTCloud/raw/main/gg.txt',
+            'eSXR': 'https://ghproxy.net/https://github.com/Commandstone/CSTCloud/raw/main/CSTPVPPack.zip'
+        };
+
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const messageElement = document.getElementById('message');
+            
+            if (passwordMap[password]) {
+                messageElement.textContent = "密码正确，正在下载文件...";
+                messageElement.style.color = "#2ecc71";
+                
+                // 创建隐藏的下载链接并触发点击
+                const downloadLink = document.createElement('a');
+                downloadLink.href = passwordMap[password];
+                downloadLink.download = '';
+                downloadLink.style.display = 'none';
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                // 3秒后清除消息
+                setTimeout(() => {
+                    messageElement.textContent = "";
+                }, 3000);
+            } else {
+                messageElement.textContent = "密码错误，请重试！";
+                messageElement.style.color = "#e74c3c";
+            }
+        }
+        
+        // 支持按回车键触发
+        document.getElementById('passwordInput').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+</body>
+</html>
