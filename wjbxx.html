@@ -1,112 +1,190 @@
-
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文件保险柜</title>
+    <title>文件保险箱</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            overflow: hidden;
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #ffff00, #00ff00);
-            font-family: Arial, sans-serif;
+            height: 100vh;
         }
-        .vault-container {
-            width: 350px;
+        
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 30px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #4fc3f7;
+            margin-bottom: 30px;
+        }
+        
+        input {
+            padding: 12px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 1px solid #4fc3f7;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 16px;
             text-align: center;
         }
-        h1 {
-            color: #333;
-            margin-bottom: 25px;
-        }
-        input[type="password"] {
-            width: 80%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border 0.3s;
-        }
-        input[type="password"]:focus {
-            border-color: #4CAF50;
-            outline: none;
-        }
+        
         button {
-            background: #4CAF50;
-            color: white;
-            border: none;
             padding: 12px 25px;
-            border-radius: 8px;
+            background-color: #4fc3f7;
+            color: black;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
+        
         button:hover {
-            background: #45a049;
+            background-color: #29b6f6;
+            transform: scale(1.05);
         }
-        #message {
+        
+        .message {
             margin-top: 20px;
-            color: #e74c3c;
-            font-weight: bold;
+            color: #ff5252;
+            min-height: 24px;
         }
     </style>
 </head>
 <body>
-    <div class="vault-container">
-        <h1>🔒 文件保险柜</h1>
-        <input type="password" id="passwordInput" placeholder="请输入密码">
-        <button onclick="checkPassword()">下载文件</button>
-        <p id="message"></p>
+    <canvas id="stars"></canvas>
+    
+    <div class="container">
+        <h1>文件保险箱</h1>
+        <p>请输入访问密码获取文件：</p>
+        <input type="password" id="passwordInput" placeholder="输入密码...">
+        <button onclick="checkPassword()">获取文件</button>
+        <p class="message" id="message"></p>
     </div>
 
     <script>
-        const passwordMap = {
-            'test: 'https://ghproxy.net/https://github.com/Commandstone/CSTCloud/raw/main/gg.txt',
-            'eSXR': 'https://ghproxy.net/https://github.com/Commandstone/CSTCloud/raw/main/CSTPVPPack.zip'
-        };
-
+        // 星空背景动画
+        const canvas = document.getElementById('stars');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const stars = [];
+        const starCount = 200;
+        
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5,
+                vx: Math.floor(Math.random() * 50) - 25,
+                vy: Math.floor(Math.random() * 50) - 25
+            });
+        }
+        
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'white';
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            moveStars();
+        }
+        
+        function moveStars() {
+            stars.forEach(star => {
+                star.x += star.vx / 100;
+                star.y += star.vy / 100;
+                
+                if (star.x < 0 || star.x > canvas.width) {
+                    star.vx = -star.vx;
+                }
+                
+                if (star.y < 0 || star.y > canvas.height) {
+                    star.vy = -star.vy;
+                }
+            });
+        }
+        
+        setInterval(drawStars, 30);
+        
+        // 密码检查
         function checkPassword() {
             const password = document.getElementById('passwordInput').value;
-            const messageElement = document.getElementById('message');
+            const message = document.getElementById('message');
             
-            if (passwordMap[password]) {
-                messageElement.textContent = "密码正确，正在下载文件...";
-                messageElement.style.color = "#2ecc71";
+            if (password === 'eSXR') {
+                message.textContent = '验证成功，正在下载文件...';
+                message.style.color = '#69f0ae';
                 
-                // 创建隐藏的下载链接并触发点击
+                // 创建下载链接
                 const downloadLink = document.createElement('a');
-                downloadLink.href = passwordMap[password];
-                downloadLink.download = '';
-                downloadLink.style.display = 'none';
+                downloadLink.href = 'https://ghproxy.net/https://github.com/Commandstone/CSTCloud/raw/main/CSTPVPPack.zip';
+                downloadLink.download = 'CSTPVPPack.zip';
                 document.body.appendChild(downloadLink);
                 downloadLink.click();
                 document.body.removeChild(downloadLink);
                 
-                // 3秒后清除消息
+                // 3秒后清空消息
                 setTimeout(() => {
-                    messageElement.textContent = "";
+                    message.textContent = '';
                 }, 3000);
             } else {
-                messageElement.textContent = "密码错误，请重试！";
-                messageElement.style.color = "#e74c3c";
+                message.textContent = '密码错误，请重试！';
+                message.style.color = '#ff5252';
+                
+                // 3秒后清空消息
+                setTimeout(() => {
+                    message.textContent = '';
+                }, 3000);
             }
+            
+            // 清空输入框
+            document.getElementById('passwordInput').value = '';
         }
         
-        // 支持按回车键触发
-        document.getElementById('passwordInput').addEventListener('keyup', function(event) {
-            if (event.key === 'Enter') {
+        // 按回车键触发检查
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
                 checkPassword();
             }
+        });
+        
+        // 响应窗口大小变化
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         });
     </script>
 </body>
