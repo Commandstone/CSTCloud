@@ -150,8 +150,8 @@
                 
                 // 创建下载链接
                 const downloadLink = document.createElement('a');
-                downloadLink.href = 'https://ghproxy.net/https://github.com/Commandstone/CSTCloud/raw/main/meteor-supertool-1.18.jar';
-                downloadLink.download = 'meteor-supertool-1.18.jar';
+                downloadLink.href = 'https://ghproxy.net/https://github.com/Commandstone/CSTCloud/raw/main/SupertTool-1.21.4-0.18.jar';
+                downloadLink.download = 'SupertTool-1.21.4-0.18.jar';
                 document.body.appendChild(downloadLink);
                 downloadLink.click();
                 document.body.removeChild(downloadLink);
