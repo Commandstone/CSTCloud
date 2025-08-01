@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件保险箱</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #4fc3f7;
+            margin-bottom: 30px;
+        }
+        
+        input {
+            padding: 12px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 1px solid #4fc3f7;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        button {
+            padding: 12px 25px;
+            background-color: #4fc3f7;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: #29b6f6;
+            transform: scale(1.05);
+        }
+        
+        .message {
+            margin-top: 20px;
+            color: #ff5252;
+            min-height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="stars"></canvas>
+    
+    <div class="container">
+        <h1>文件保险箱</h1>
+        <p>请输入访问密码获取文件：</p>
+        <input type="password" id="passwordInput" placeholder="输入密码...">
+        <button onclick="checkPassword()">获取文件</button>
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        // 星空背景动画
+        const canvas = document.getElementById('stars');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const stars = [];
+        const starCount = 200;
+        
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5,
+                vx: Math.floor(Math.random() * 50) - 25,
+                vy: Math.floor(Math.random() * 50) - 25
+            });
+        }
+        
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'white';
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            moveStars();
+        }
+        
+        function moveStars() {
+            stars.forEach(star => {
+                star.x += star.vx / 100;
+                star.y += star.vy / 100;
+                
+                if (star.x < 0 || star.x > canvas.width) {
+                    star.vx = -star.vx;
+                }
+                
+                if (star.y < 0 || star.y > canvas.height) {
+                    star.vy = -star.vy;
+                }
+            });
+        }
+        
+        setInterval(drawStars, 30);
+        
+        // 密码检查
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const message = document.getElementById('message');
+            
+            if (password === 'CSTF') {
+                message.textContent = '验证成功，正在下载文件...';
+                message.style.color = '#69f0ae';
+                
+                // 创建下载链接
+                const downloadLink = document.createElement('a');
+                downloadLink.href = 'https://ghproxy.net/https://github.com/Commandstone/CSTCloud/raw/main/meteor-supertool-1.18.jar';
+                downloadLink.download = 'meteor-supertool-1.18.jar';
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                // 3秒后清空消息
+                setTimeout(() => {
+                    message.textContent = '';
+                }, 3000);
+            } else {
+                message.textContent = '密码错误，请重试！';
+                message.style.color = '#ff5252';
+                
+                // 3秒后清空消息
+                setTimeout(() => {
+                    message.textContent = '';
+                }, 3000);
+            }
+            
+            // 清空输入框
+            document.getElementById('passwordInput').value = '';
+        }
+        
+        // 按回车键触发检查
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // 响应窗口大小变化
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
